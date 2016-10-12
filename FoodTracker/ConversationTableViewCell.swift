@@ -9,12 +9,15 @@
 
 import UIKit
 
-class MealTableViewCell: UITableViewCell {
+class ConversationTableViewCell: UITableViewCell {
     // MARK: Properties
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var ratingControl: RatingControl!
+    @IBOutlet weak var conChats: UILabel!
+    @IBOutlet weak var sendTime: UILabel!
+    @IBOutlet weak var countChat: UILabel!
+
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -9,10 +9,10 @@
 
 import UIKit
 
-class MealTableViewController: UITableViewController {
+class ConversationTableViewController: UITableViewController {
     // MARK: Properties
     
-    var meals = [Meal]()
+    var conversations = [Conversation]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,15 +23,15 @@ class MealTableViewController: UITableViewController {
     
     func loadSampleMeals() {
         let photo1 = UIImage(named: "meal1")!
-        let meal1 = Meal(name: "Caprese Salad", photo: photo1, rating: 4)!
+        let con1 = Conversation(title: "Caprese Salad", photo: photo1.circle, chat: "hallo", sendTime: "11 m", countChat: 1)!
         
         let photo2 = UIImage(named: "meal2")!
-        let meal2 = Meal(name: "Chicken and Potatoes", photo: photo2, rating: 5)!
+        let con2 = Conversation(title: "Chicken and Potatoes", photo: photo2.circle, chat: "hallo", sendTime: "11 m", countChat: 1)!
         
         let photo3 = UIImage(named: "meal3")!
-        let meal3 = Meal(name: "Pasta with Meatballs", photo: photo3, rating: 3)!
+        let con3 = Conversation(title: "Pasta with Meatballs", photo: photo3.circle, chat: "hallo", sendTime: "11 m", countChat: 1)!
         
-        meals += [meal1, meal2, meal3]
+        conversations += [con1, con2, con3]
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,20 +46,22 @@ class MealTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return meals.count
+        return conversations.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Table view cells are reused and should be dequeued using a cell identifier.
-        let cellIdentifier = "MealTableViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! MealTableViewCell
+        let cellIdentifier = "ConversationTableViewCell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! ConversationTableViewCell
         
         // Fetches the appropriate meal for the data source layout.
-        let meal = meals[indexPath.row]
+        let con = conversations[indexPath.row]
         
-        cell.nameLabel.text = meal.name
-        cell.photoImageView.image = meal.photo
-        cell.ratingControl.rating = meal.rating
+        cell.nameLabel.text = con.title
+        cell.photoImageView.image = con.photo
+        cell.conChats.text = con.chat
+        cell.sendTime.text = con.sendTime
+        cell.countChat.text = String(con.countChat)
         
         return cell
     }
@@ -109,4 +111,32 @@ class MealTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension UIImage {
+    var rounded: UIImage? {
+        let imageView = UIImageView(image: self)
+        imageView.layer.cornerRadius = min(size.height/4, size.width/4)
+        imageView.layer.masksToBounds = true
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        imageView.layer.renderInContext(context)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
+    }
+    var circle: UIImage? {
+        let square = CGSize(width: min(size.width, size.height), height: min(size.width, size.height))
+        let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: square))
+        imageView.contentMode = .ScaleAspectFill
+        imageView.image = self
+        imageView.layer.cornerRadius = square.width/2
+        imageView.layer.masksToBounds = true
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        imageView.layer.renderInContext(context)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
+    }
 }

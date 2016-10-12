@@ -9,23 +9,30 @@
 
 import UIKit
 
-class Meal {
+class Conversation {
     // MARK: Properties
     
-    var name: String
+    var title: String
+    var chat: String
+    var sendTime: String
+    var countChat: Int
+    
+//    var name: String
     var photo: UIImage?
-    var rating: Int
+//    var rating: Int
 
     // MARK: Initialization
     
-    init?(name: String, photo: UIImage?, rating: Int) {
+    init?(title: String, photo: UIImage?, chat: String, sendTime: String, countChat: Int) {
         // Initialize stored properties.
-        self.name = name
+        self.title = title
+        self.chat = chat
         self.photo = photo
-        self.rating = rating
+        self.sendTime = sendTime
+        self.countChat = countChat
         
         // Initialization should fail if there is no name or if the rating is negative.
-        if name.isEmpty || rating < 0 {
+        if title.isEmpty || chat.isEmpty {
             return nil
         }
     }
